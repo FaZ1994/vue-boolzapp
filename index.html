@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <title>BoolZapp</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container h-100">
+
+        <div class="row align-items-stretch h-100 g-0">
+        <div class="col-4 bg-light h100">
+          <div class="header d-flex justify-content-between"> 
+
+            <div class="user p-2 align-items-center">
+              <img class="rounded-circle" src="./img/avatar_io.jpg" alt="Avatar io">
+              <span>Sofia</span>
+            </div>
+
+            <ul class="nav-icons d-flex align-items-center">
+              <li><i class=" fa-solid fa-circle-notch"></i></i></li>
+              <li><i class=" fa-solid fa-message"></i></li>
+              <li><i class=" fa-solid fa-ellipsis-vertical"></i></li>
+          </ul>
+      
+          </div>
+          <div class="notification p-2 d-flex justify-content-start align-items-center">
+              <div class="icon rounded-circle bg-light 
+              d-flex justify-content-center align-items-center">
+              <i class="fas fa-bell-slash m-2"></i>
+            </div>
+              <div class="text">
+                  <div>Ricevi notifiche di nuovi messaggi</div>
+                  <a href="#">Attiva notifiche desktop</a>
+              </div>
+          
+          </div>
+          <div class="search-bar">
+            <div class="input-group mb-3 p-1">
+              <span class="input-group-text fa fa-search bg-light d-flex align-items-center">
+  
+              </span>
+              <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat" v-model="searchText" @keyup="filterContact">
+            </div>
+          </div>
+          <div class="contacts">
+            <ul class="list-group">
+              <li v-for="(contact, index) in contacts" :key="index" class="list-group-item d-flex justify-content-start align-items-center" :class="{'active':currentIndex === index}" @click="viewChat(index)">
+
+                <div v-if="contact.visible">
+                  <img class="rounded-circle" :src="'./img/avatar'+contact.avatar + '.jpg'" :alt="'Avatar'+ contact.name">
+                  <span>{{contact.name}}</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-8 bg-light h100">
+          
+          
+          <div class="header list-group-item d-flex justify-content-between">
+            
+            <div class="user d-flex">
+            <img class="rounded-circle" :src="'./img/avatar' + contacts[currentIndex].avatar + '.jpg'" alt="">
+              
+                  <div class="details">
+                      <div class="currentUser">
+                          <span>{{contacts[currentIndex].name}}</span> 
+                      </div>
+                      <div class="statusUser">
+                          <p>Ultimo accesso il {{contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date}}</p>
+                      </div>
+                      
+                      
+                  </div>
+              
+            </div>
+
+          <ul class="nav-icons d-flex">
+              <li><i class="fa-solid fa-magnifying-glass"></i></li>
+              <li><i class="fa-solid fa-paperclip"></i></li>
+              <li><i class="fa-solid fa-ellipsis-vertical"></i></li>
+          </ul>
+
+          </div>
+          <div class="messages-container">
+            <div class="message-text" v-for="(item,index) in contacts[currentIndex].messages" :key="index" :class="item.status === 'sent' ? 'sent' : 'received'">
+              <span>{{item.message}}</span>
+              <span>{{item.date}}</span>
+            </div>
+
+          </div>
+          <div class="footer">
+            <input class="form-control" type="text" v-model="message" @keyup.enter="sendMessage()">
+          </div>
+
+        </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <script src="./js/main.js"></script>
+  </body>
+</html>
