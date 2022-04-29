@@ -3,6 +3,7 @@ const app = new Vue({
   data: {
     contacts: [
       {
+        id: 1,
         name: "Michele",
         avatar: "_1",
         visible: true,
@@ -25,6 +26,7 @@ const app = new Vue({
         ],
       },
       {
+        id: 2,
         name: "Fabio",
         avatar: "_2",
         visible: true,
@@ -47,6 +49,7 @@ const app = new Vue({
         ],
       },
       {
+        id: 3,
         name: "Samuele",
         avatar: "_3",
         visible: true,
@@ -69,6 +72,7 @@ const app = new Vue({
         ],
       },
       {
+        id: 4,
         name: "Alessandro B.",
         avatar: "_4",
         visible: true,
@@ -86,6 +90,7 @@ const app = new Vue({
         ],
       },
       {
+        id: 5,
         name: "Alessandro L.",
         avatar: "_5",
         visible: true,
@@ -103,6 +108,7 @@ const app = new Vue({
         ],
       },
       {
+        id: 6,
         name: "Claudia",
         avatar: "_6",
         visible: true,
@@ -125,6 +131,7 @@ const app = new Vue({
         ],
       },
       {
+        id: 7,
         name: "Federico",
         avatar: "_7",
         visible: true,
@@ -142,6 +149,7 @@ const app = new Vue({
         ],
       },
       {
+        id: 8,
         name: "Davide",
         avatar: "_8",
         visible: true,
@@ -165,31 +173,41 @@ const app = new Vue({
       },
     ],
     currentIndex: 0,
-    searchItext: '',
+    activeContactId: 1,
+    searchText: '',
     message: ''
   },
   methods: {
-    viewChat(index) {
+    
+    viewChat(id) {
+      const index = this.contacts.findIndex((contact)=>{
+        return contact.id === id;
+      })
       this.currentIndex = index;
+      this.activeContactId = id;
     },
     sendMessage(){
+      if (this.message == '' || this.message == ' ') return;
       const newMessage = {
-        date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
+        date: 'Oggi' + dayjs().format('HH:mm'),
         message: this.message,
         status: "sent",
+        
       };
-      const respomseMessage = {
-        date:dayjs().format('DD/MM/YYYY HH:mm:ss'),
-        message: 'ok',
-        status: "received",
-      };
-      this.contacts[this.currentIndex].messages.push(newMessage);
-      this.message = '';
-      setTimeout(() => {
-        this.contacts[this.currentIndex].messages.push(respomseMessage);
-      },2000)
+      const responseMessage = {
+        date: 'Oggi' + dayjs().format('HH:mm'),
+        message: 'Ok',
+        status: 'received',
+        
+    }
+        this.contacts[this.currentIndex].messages.push(newMessage);
+        this.message = '';
+        setTimeout(()=>{
+            this.contacts[this.currentIndex].messages.push(responseMessage);
+        },2000);
     },
-    filterContact(){
+
+    /*filterContact(){
       this.contacts.forEach((contact)=>{
         if(contact.name.toLowerCase().includes(this.searchText.toLowerCase())){
           contact.visible = true;
@@ -198,6 +216,12 @@ const app = new Vue({
         }
 
       })
+    } */
+  },
+
+  computed: {
+    filteredContacts(){
+      return this.contacts.filter((contact)=> contact.name.toLowerCase().includes(this.searchText.toLowerCase()))
     }
   }
 })

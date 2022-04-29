@@ -55,17 +55,26 @@
 .search-bar span {
 color: var(--dark-gray);
 }
+
 .contacts{
   height: calc(100% - 200px);
   overflow-y: auto;
+  cursor: pointer;
 }
 
 .contacts li .list-group-item {
   background-color: var(--light-gray);
+
 }
-.contacts li .list-group-item.active{
-  background-color: var(--light-gray);
+.contacts .list-group-item.active-contact {
+  background-color: var(--mid-gray);
 }
+
+.contacts p {
+  font-size:.8em;
+  color: var(--dark-gray);
+}
+
 
 img, .icon {
   width: 50px;
@@ -73,12 +82,13 @@ img, .icon {
   margin-right: 10px;
 }
 
+
 .messages-container {
   height: calc(100% - 140px);
   width: 100%;
   padding: 5% 10%;
   background-image: url(../img/mine.jpg);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .footer {
@@ -95,26 +105,39 @@ img, .icon {
   background-color: var(--white);
   border-radius: 10px;
   font-size:15px;
+  
 }
-
+.time {
+  color: var(--dark-gray);
+  font-size: .6em;
+  max-width: 20%;
+  text-align: right;
+  
+}
 .message-text.sent {
-  background-color: var(--white);
+  background-color: var(--light-green);
   float: right;
   clear: both;
 }
 
 .message-text.received {
-  background-color: var(--light-green);
+  background-color: var(--white);
   float: left;
   clear: both;
 }
   
-.nav-icons li{
-  display: flex;
-  list-style: none;
+.nav-icons {
   cursor: pointer;
   color:var(--dark-gray);
-  padding-left: 15px;
-  padding-top: 15px;
   font-size: 20px;
+  padding-right: 15px;
+  padding-top: 15px;
+
+
+}
+.nav-icons li{
+  list-style: none;
+  padding-left: 15px;
+ 
+
 }

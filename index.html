@@ -27,7 +27,7 @@
       <div class="container h-100">
 
         <div class="row align-items-stretch h-100 g-0">
-        <div class="col-4 bg-light h100">
+        <div class="col-4 p-0 bg-light h-100">
           <div class="header d-flex justify-content-between"> 
 
             <div class="user p-2 align-items-center">
@@ -58,22 +58,28 @@
               <span class="input-group-text fa fa-search bg-light d-flex align-items-center">
   
               </span>
-              <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat" v-model="searchText" @keyup="filterContact">
+              <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat" v-model="searchText">
             </div>
           </div>
           <div class="contacts">
             <ul class="list-group">
-              <li v-for="(contact, index) in contacts" :key="index" class="list-group-item d-flex justify-content-start align-items-center" :class="{'active':currentIndex === index}" @click="viewChat(index)">
+              <li v-for="(contact, index) in filteredContacts" :key="contact.id" class="list-group-item d-flex justify-content-start align-items-center" :class="{'active-contact': contact.id === activeContactId}" @click="viewChat(contact.id)">
 
-                <div v-if="contact.visible">
-                  <img class="rounded-circle" :src="'./img/avatar'+contact.avatar + '.jpg'" :alt="'Avatar'+ contact.name">
-                  <span>{{contact.name}}</span>
+                <div class="user w-100 d-flex justify-content-between">
+                  <div class="data-user d-flex">
+                    <img class="rounded-circle" :src="'./img/avatar'+contact.avatar + '.jpg'" :alt="'Avatar'+ contact.name">
+                    <span>{{contact.name}}
+                    <p>Ultimo messaggio inviato </p>
+                  </span>
+                  </div>
+                  <span class="time">12:00</span>
+                 
                 </div>
               </li>
             </ul>
           </div>
         </div>
-        <div class="col-8 bg-light h100">
+        <div class="col-8 p-0 bg-light h-100">
           
           
           <div class="header list-group-item d-flex justify-content-between">
@@ -84,9 +90,10 @@
                   <div class="details">
                       <div class="currentUser">
                           <span>{{contacts[currentIndex].name}}</span> 
+                          
                       </div>
                       <div class="statusUser">
-                          <p>Ultimo accesso il {{contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date}}</p>
+                          <p>Ultimo accesso: {{contacts[currentIndex].messages[contacts[currentIndex].messages.length - 1].date}}</p>
                       </div>
                       
                       
@@ -102,14 +109,19 @@
 
           </div>
           <div class="messages-container">
-            <div class="message-text" v-for="(item,index) in contacts[currentIndex].messages" :key="index" :class="item.status === 'sent' ? 'sent' : 'received'">
-              <span>{{item.message}}</span>
-              <span>{{item.date}}</span>
+            <div class="message-text d-flex justify-content-between" v-for="(item,index) in contacts[currentIndex].messages" :key="index" :class="item.status === 'sent' ? 'sent' : 'received'">
+
+              
+              
+              <span class="text">{{item.message}}</span>
+              <span class="time d-flex">{{item.date}}</span>
             </div>
 
           </div>
-          <div class="footer">
-            <input class="form-control" type="text" v-model="message" @keyup.enter="sendMessage()">
+          <div class="footer d-flex align-items-center">
+            <i class=" nav-icons p-3 fa-solid fa-face-smile"></i>
+            <input class="form-control" type="text"  placeholder="Scrivi un messaggio" v-model="message" @keyup.enter="sendMessage()">
+            <i class=" nav-icons p-3 fa-solid fa-microphone"></i>
           </div>
 
         </div>
